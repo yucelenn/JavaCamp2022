@@ -3,6 +3,7 @@ package Kodlama.io.Devs.business.concretes;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import Kodlama.io.Devs.business.abstracts.TechnologyService;
@@ -18,6 +19,7 @@ public class TechnologyManager implements TechnologyService {
 	LanguageRepository languageRepository;
 	List<Technology> technologies;
 
+	@Autowired
 	public TechnologyManager(TechnologyRepository technologyRepository, 
 			LanguageRepository languageRepository, List<Technology> technologies) {
 		this.technologyRepository = technologyRepository;
@@ -42,7 +44,7 @@ public class TechnologyManager implements TechnologyService {
 	public void isTechnologyExist(String name) throws Exception {
 		for (Technology technology : technologyRepository.findAll()) {
 			if (technology.getName().equals(name)) {
-				throw new Exception("Technology exist.");
+				throw new Exception("alt teknoloji mevcut.");
 			}
 		}
 	}
@@ -52,7 +54,7 @@ public class TechnologyManager implements TechnologyService {
 			if (technology.getId() == id)
 				break;
 			else {
-				throw new Exception("Technology is not exist.");
+				throw new Exception("alt teknoloji mevcut değil.");
 			}
 		}
 
@@ -60,7 +62,7 @@ public class TechnologyManager implements TechnologyService {
 
 	public void isTechnologyNameEmpty(String name) throws Exception {
 		if (name.isEmpty()) {
-			throw new Exception("Technology name can not be empty.");
+			throw new Exception("alt teknoloji ismi boş bırakılamaz.");
 		}
 	}
 	

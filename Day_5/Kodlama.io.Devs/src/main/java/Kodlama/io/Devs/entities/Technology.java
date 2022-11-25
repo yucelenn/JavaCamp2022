@@ -24,9 +24,11 @@ public class Technology {
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@Column(name = "name", unique = true, length = 20)
+	
+	@Column(name = "name", unique = true, length = 30)
 	private String name;
+	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "languageId", nullable = false)
+	@JoinColumn(name = "language_id", nullable = false)
 	private Language language;
 }

@@ -3,6 +3,7 @@ package Kodlama.io.Devs.business.concretes;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import Kodlama.io.Devs.business.abstracts.LanguageService;
@@ -17,6 +18,7 @@ public class LanguageManager implements LanguageService {
 	private LanguageRepository languageRepository;
 	List<Language> languages;
 	
+	@Autowired
 	public LanguageManager(LanguageRepository languageRepository,List<Language> languages) {
 		super();
 		this.languageRepository = languageRepository;
@@ -26,7 +28,7 @@ public class LanguageManager implements LanguageService {
 	public void isLanguageExist(String name) throws Exception {
 		for (Language language : languageRepository.findAll()) {
 			if (language.getName().equals(name)) {
-				throw new Exception("Language exist.");
+				throw new Exception("Yazılım dili mevcut.");
 			}
 		}
 	}
@@ -36,7 +38,7 @@ public class LanguageManager implements LanguageService {
 			if (language.getId() == id)
 				break;
 			else {
-				throw new Exception("Language is not exist.");
+				throw new Exception("Yazılım dili mevcut değil.");
 			}
 		}
 
@@ -44,7 +46,7 @@ public class LanguageManager implements LanguageService {
 
 	public void isLanguageNameEmpty(String name) throws Exception {
 		if (name.isEmpty()) {
-			throw new Exception("Language name can not be empty.");
+			throw new Exception("Yazılım dili ismi boş bırakılamaz.");
 		}
 	}
 	
