@@ -27,20 +27,6 @@ public class TechnologyManager implements TechnologyService {
 		this.technologies = technologies;
 	}
 
-	@Override
-	public List<GetAllTechnologiesResponse> getAll() {
-		List<Technology> technologies = technologyRepository.findAll();
-		List<GetAllTechnologiesResponse> allTechnologiesResponses = new ArrayList<GetAllTechnologiesResponse>();
-		
-		for (Technology technology : technologies) {
-			GetAllTechnologiesResponse technologiesResponse = new GetAllTechnologiesResponse();
-			technologiesResponse.setId(technology.getId());
-			technologiesResponse.setName(technology.getName());
-			allTechnologiesResponses.add(technologiesResponse);
-		}
-		return allTechnologiesResponses;
-	}
-
 	public void isTechnologyExist(String name) throws Exception {
 		for (Technology technology : technologyRepository.findAll()) {
 			if (technology.getName().equals(name)) {
@@ -51,8 +37,9 @@ public class TechnologyManager implements TechnologyService {
 
 	public void isTechnologyExist(int id) throws Exception {
 		for (Technology technology : technologyRepository.findAll()) {
-			if (technology.getId() == id)
+			if (technology.getId() == id) {
 				break;
+			}
 			else {
 				throw new Exception("alt teknoloji mevcut değil.");
 			}
@@ -75,6 +62,21 @@ public class TechnologyManager implements TechnologyService {
 			throw e;
 		}
 	}
+
+	@Override
+	public List<GetAllTechnologiesResponse> getAll() {
+		List<Technology> technologies = technologyRepository.findAll();
+		List<GetAllTechnologiesResponse> allTechnologiesResponses = new ArrayList<GetAllTechnologiesResponse>();
+		
+		for (Technology technology : technologies) {
+			GetAllTechnologiesResponse technologiesResponse = new GetAllTechnologiesResponse();
+			technologiesResponse.setId(technology.getId());
+			technologiesResponse.setName(technology.getName());
+			technologiesResponse.setLanguageId(technology.getLanguage().getId());
+			allTechnologiesResponses.add(technologiesResponse);
+		}
+		return allTechnologiesResponses;
+	}	
 	
 	@Override
 	public void add(CreateTechnologiesRequest technologiesRequest) throws Exception {
@@ -93,9 +95,10 @@ public class TechnologyManager implements TechnologyService {
 	@Override
 	public void update(CreateTechnologiesRequest technologiesRequest) throws Exception {
 		try {
-			isTechnologyExist(technologiesRequest.getId());
+			//isTechnologyExist(technologiesRequest.getId());
 			Technology technology = technologyRepository.getReferenceById(technologiesRequest.getId());
 			technology.setName(technologiesRequest.getName());
+			technology.setLanguage(languageRepository.getReferenceById(technologiesRequest.getLanguageId()));
 			this.technologyRepository.save(technology);
 		} catch (Exception e) {
 			throw e;
@@ -105,11 +108,12 @@ public class TechnologyManager implements TechnologyService {
 	@Override
 	public void delete(int id) throws Exception {
 		try {
-			isTechnologyExist(id);
+			//isTechnologyExist(id);
 			technologyRepository.delete(technologyRepository.getReferenceById(id));
 		} catch (Exception e) {
 			throw e;
 		}
 	}
-
+	
+	
 }

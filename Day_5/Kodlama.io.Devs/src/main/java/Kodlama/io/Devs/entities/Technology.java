@@ -27,8 +27,8 @@ public class Technology {
 	
 	@Column(name = "name", unique = true, length = 30)
 	private String name;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "language_id", nullable = false)
+	@JoinColumn(name = "languageId", nullable = false)
 	private Language language;
 }
